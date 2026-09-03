@@ -7,3 +7,4 @@ Publifix is a platform that lets people report damaged or neglected public infra
 The goal is simple: make it easy to speak up about what's broken around you, and easy to see that someone's actually listening.
 
 (MERN PROJECT BY SAI PRANAV REDDY)
+Copyrighted by Pranav ig
