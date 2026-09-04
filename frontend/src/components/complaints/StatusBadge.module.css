@@ -1,0 +1,39 @@
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.inReview {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.inProgress {
+  background-color: #e0e7ff;
+  color: #3730a3;
+}
+
+.resolved {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.rejected {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.badge:not(.pending):not(.inReview):not(.inProgress):not(.resolved):not(.rejected) {
+  background-color: #f3f4f6;
+  color: #374151;
+}
