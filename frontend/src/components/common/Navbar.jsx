@@ -22,6 +22,7 @@ const Navbar = () => {
           <>
             <Link to="/dashboard">Dashboard</Link>
             <Link to="/new-complaint">Report an Issue</Link>
+            {user.role === 'admin' && <Link to="/admin">Admin Panel</Link>}
             <button onClick={handleLogout} className={styles.logoutBtn}>
               Logout
             </button>

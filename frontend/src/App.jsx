@@ -5,8 +5,10 @@ import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import NewComplaint from './pages/NewComplaint';
 import ComplaintDetail from './pages/ComplaintDetail';
+import AdminPanel from './pages/AdminPanel';
 import Navbar from './components/common/Navbar';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import AdminRoute from './components/common/AdminRoute';
 
 function App() {
   return (
@@ -33,6 +35,14 @@ function App() {
           }
         />
         <Route path="/complaints/:id" element={<ComplaintDetail />} />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminPanel />
+            </AdminRoute>
+          }
+        />
       </Routes>
     </>
   );
