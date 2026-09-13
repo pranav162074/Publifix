@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { loginUser, registerUser, getCurrentUser } from '../api/authApi';
+import { loginUser, registerUser, googleLogin as googleLoginApi, getCurrentUser } from '../api/authApi';
 
 export const AuthContext = createContext();
 
@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // On app load, check if a token exists and fetch the logged-in user
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -32,13 +31,19 @@ export const AuthProvider = ({ children }) => {
     setUser(res.data.user);
   };
 
+  const googleLogin = async (credential) => {
+    const res = await googleLoginApi(credential);
+    localStorage.setItem('token', res.data.token);
+    setUser(res.data.user);
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, signup, googleLogin, logout }}>
       {children}
     </AuthContext.Provider>
   );

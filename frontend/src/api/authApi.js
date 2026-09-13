@@ -2,4 +2,6 @@ import axiosInstance from './axiosInstance';
 
 export const registerUser = (data) => axiosInstance.post('/auth/register', data);
 export const loginUser = (data) => axiosInstance.post('/auth/login', data);
+export const googleLogin = (credential) =>
+  axiosInstance.post('/auth/google', { credential });
 export const getCurrentUser = () => axiosInstance.get('/auth/me');

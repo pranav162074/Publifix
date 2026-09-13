@@ -50,3 +50,28 @@
   text-align: center;
   font-size: 0.85rem;
 }
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.8rem;
+  margin: 0.3rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.divider span {
+  padding: 0 0.7rem;
+}
+
+.googleWrapper {
+  display: flex;
+  justify-content: center;
+}
