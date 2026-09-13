@@ -1,0 +1,29 @@
+.container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 3rem;
+  line-height: 1.6;
+}
+
+.container h1 {
+  margin-bottom: 0.2rem;
+}
+
+.updated {
+  color: #9ca3af;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.container h2 {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.container ul {
+  padding-left: 1.2rem;
+}
+
+.container a {
+  color: inherit;
+}
