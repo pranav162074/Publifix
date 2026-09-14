@@ -1,5 +1,7 @@
 import Complaint from '../models/Complaint.js';
+import User from '../models/User.js';
 import cloudinary from '../config/cloudinary.js';
+import sendEmail from '../utils/sendEmail.js';
 
 // Helper: upload a buffer to Cloudinary
 const uploadToCloudinary = (buffer) => {
@@ -93,6 +95,15 @@ export const updateComplaintStatus = async (req, res) => {
 
     complaint.status = status;
     await complaint.save();
+
+    const user = await User.findById(complaint.createdBy);
+    if (user && user.email) {
+      sendEmail({
+        to: user.email,
+        subject: `Your complaint status has been updated`,
+        text: `Hi ${user.name},\n\nYour complaint "${complaint.title}" status has been changed to: ${status}.\n\nYou can view the details in your Publifix dashboard.\n\n- Publifix Team`,
+      });
+    }
 
     res.json(complaint);
   } catch (error) {
