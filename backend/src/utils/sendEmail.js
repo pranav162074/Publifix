@@ -1,18 +1,23 @@
 import nodemailer from 'nodemailer';
-
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_APP_PASSWORD,
-  },
-  family: 4,
-});
+import dns from 'node:dns/promises';
 
 const sendEmail = async ({ to, subject, text }) => {
   try {
+    const { address } = await dns.lookup('smtp.gmail.com', { family: 4 });
+
+    const transporter = nodemailer.createTransport({
+      host: address,
+      port: 465,
+      secure: true,
+      tls: {
+        servername: 'smtp.gmail.com',
+      },
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_APP_PASSWORD,
+      },
+    });
+
     const info = await transporter.sendMail({
       from: `"Publifix" <${process.env.EMAIL_USER}>`,
       to,
