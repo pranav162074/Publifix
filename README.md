@@ -1,4 +1,6 @@
-Publifix
+# Publifix
+
+[![Run Backend Tests](https://github.com/pranav162074/Publifix/actions/workflows/test.yml/badge.svg)](https://github.com/pranav162074/Publifix/actions/workflows/test.yml)
 
 Public spaces break down, potholes go unfilled, streetlights stay dark, garbage piles up, drains overflow and most of the time there's no simple way for a citizen to report it and actually know what happens next.
 
