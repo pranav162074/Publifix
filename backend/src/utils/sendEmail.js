@@ -1,30 +1,21 @@
-import nodemailer from 'nodemailer';
-import dns from 'node:dns/promises';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async ({ to, subject, text }) => {
   try {
-    const { address } = await dns.lookup('smtp.gmail.com', { family: 4 });
-
-    const transporter = nodemailer.createTransport({
-      host: address,
-      port: 465,
-      secure: true,
-      tls: {
-        servername: 'smtp.gmail.com',
-      },
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_APP_PASSWORD,
-      },
-    });
-
-    const info = await transporter.sendMail({
-      from: `"Publifix" <${process.env.EMAIL_USER}>`,
+    const { data, error } = await resend.emails.send({
+      from: 'Publifix <onboarding@resend.dev>',
       to,
       subject,
       text,
     });
-    console.log('Email sent successfully:', info.response);
+
+    if (error) {
+      console.error('Email send failed:', error.message);
+    } else {
+      console.log('Email sent successfully:', data.id);
+    }
   } catch (error) {
     console.error('Email send failed:', error.message);
   }
