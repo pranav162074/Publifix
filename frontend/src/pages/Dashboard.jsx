@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getMyComplaints } from '../api/complaintApi';
 import { useAuth } from '../hooks/useAuth';
 import ComplaintCard from '../components/complaints/ComplaintCard';
+import ComplaintCardSkeleton from '../components/complaints/ComplaintCardSkeleton';
 import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
@@ -35,7 +36,6 @@ const Dashboard = () => {
         </Link>
       </div>
 
-      {loading && <p>Loading your complaints...</p>}
       {error && <p className={styles.error}>{error}</p>}
 
       {!loading && !error && complaints.length === 0 && (
@@ -43,9 +43,11 @@ const Dashboard = () => {
       )}
 
       <div className={styles.grid}>
-        {complaints.map((complaint) => (
-          <ComplaintCard key={complaint._id} complaint={complaint} />
-        ))}
+        {loading
+          ? Array.from({ length: 6 }).map((_, i) => <ComplaintCardSkeleton key={i} />)
+          : complaints.map((complaint) => (
+              <ComplaintCard key={complaint._id} complaint={complaint} />
+            ))}
       </div>
     </div>
   );
