@@ -9,10 +9,11 @@ import {
 import protect from '../middleware/authMiddleware.js';
 import admin from '../middleware/adminMiddleware.js';
 import upload from '../middleware/uploadMiddleware.js';
+import { complaintLimiter } from '../middleware/rateLimitMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', protect, upload.single('photo'), createComplaint);
+router.post('/', protect, complaintLimiter, upload.single('photo'), createComplaint);
 router.get('/mine', protect, getMyComplaints);
 router.get('/', protect, admin, getAllComplaints);
 router.get('/:id', getComplaintById);
