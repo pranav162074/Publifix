@@ -44,19 +44,6 @@ export const createComplaint = async (req, res) => {
   }
 };
 
-// @desc   Get logged-in user's complaints
-// @route  GET /api/complaints/mine
-export const getMyComplaints = async (req, res) => {
-  try {
-    const complaints = await Complaint.find({ createdBy: req.user.id }).sort({
-      createdAt: -1,
-    });
-    res.json(complaints);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
 // @desc   Get a single complaint by ID
 // @route  GET /api/complaints/:id
 export const getComplaintById = async (req, res) => {
@@ -71,12 +58,53 @@ export const getComplaintById = async (req, res) => {
   }
 };
 
+// @desc   Get logged-in user's complaints
+// @route  GET /api/complaints/mine
+export const getMyComplaints = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 9;
+    const skip = (page - 1) * limit;
+
+    const total = await Complaint.countDocuments({ createdBy: req.user.id });
+
+    const complaints = await Complaint.find({ createdBy: req.user.id })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    res.json({
+      complaints,
+      page,
+      totalPages: Math.ceil(total / limit),
+      totalComplaints: total,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // @desc   Get all complaints (admin)
 // @route  GET /api/complaints
 export const getAllComplaints = async (req, res) => {
   try {
-    const complaints = await Complaint.find().sort({ createdAt: -1 });
-    res.json(complaints);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 9;
+    const skip = (page - 1) * limit;
+
+    const total = await Complaint.countDocuments();
+
+    const complaints = await Complaint.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    res.json({
+      complaints,
+      page,
+      totalPages: Math.ceil(total / limit),
+      totalComplaints: total,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -4,6 +4,7 @@ import { getMyComplaints } from '../api/complaintApi';
 import { useAuth } from '../hooks/useAuth';
 import ComplaintCard from '../components/complaints/ComplaintCard';
 import ComplaintCardSkeleton from '../components/complaints/ComplaintCardSkeleton';
+import Pagination from '../components/common/Pagination';
 import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
@@ -11,12 +12,16 @@ const Dashboard = () => {
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchComplaints = async () => {
+      setLoading(true);
       try {
-        const res = await getMyComplaints();
-        setComplaints(res.data);
+        const res = await getMyComplaints(currentPage);
+        setComplaints(res.data.complaints);
+        setTotalPages(res.data.totalPages);
       } catch (err) {
         setError('Failed to load your complaints. Please try again.');
       } finally {
@@ -25,7 +30,12 @@ const Dashboard = () => {
     };
 
     fetchComplaints();
-  }, []);
+  }, [currentPage]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div className={styles.container}>
@@ -49,6 +59,14 @@ const Dashboard = () => {
               <ComplaintCard key={complaint._id} complaint={complaint} />
             ))}
       </div>
+
+      {!loading && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 };

@@ -88,8 +88,9 @@ describe('Complaint Routes', () => {
       .set('Authorization', `Bearer ${tokenA}`);
 
     expect(res.statusCode).toBe(200);
-    expect(res.body.length).toBe(1);
-    expect(res.body[0].title).toBe('User A complaint');
+    expect(res.body.complaints.length).toBe(1);
+    expect(res.body.complaints[0].title).toBe('User A complaint');
+    expect(res.body.totalComplaints).toBe(1);
   });
 
   test('should block a regular citizen from viewing all complaints', async () => {
@@ -110,6 +111,8 @@ describe('Complaint Routes', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty('complaints');
+    expect(res.body).toHaveProperty('totalPages');
   });
 
   test('should block a regular citizen from updating complaint status', async () => {
