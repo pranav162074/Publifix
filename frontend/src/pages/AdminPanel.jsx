@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getAllComplaints, updateComplaintStatus } from '../api/complaintApi';
 import StatusBadge from '../components/complaints/StatusBadge';
 import AdminRowSkeleton from '../components/complaints/AdminRowSkeleton';
+import Pagination from '../components/common/Pagination';
 import styles from './AdminPanel.module.css';
 
 const statusOptions = ['pending', 'in-review', 'in-progress', 'resolved', 'rejected'];
@@ -11,20 +12,31 @@ const AdminPanel = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [updatingId, setUpdatingId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalComplaints, setTotalComplaints] = useState(0);
 
   useEffect(() => {
     fetchComplaints();
-  }, []);
+  }, [currentPage]);
 
   const fetchComplaints = async () => {
+    setLoading(true);
     try {
-      const res = await getAllComplaints();
-      setComplaints(res.data);
+      const res = await getAllComplaints(currentPage);
+      setComplaints(res.data.complaints);
+      setTotalPages(res.data.totalPages);
+      setTotalComplaints(res.data.totalComplaints);
     } catch (err) {
       setError('Failed to load complaints.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleStatusChange = async (id, newStatus) => {
@@ -47,7 +59,7 @@ const AdminPanel = () => {
     <div className={styles.container}>
       <h2>Admin Panel</h2>
       <p className={styles.subtitle}>
-        {loading ? 'Loading complaints...' : `${complaints.length} total complaints`}
+        {loading ? 'Loading complaints...' : `${totalComplaints} total complaints`}
       </p>
 
       <div className={styles.list}>
@@ -91,6 +103,14 @@ const AdminPanel = () => {
               </div>
             ))}
       </div>
+
+      {!loading && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 };
