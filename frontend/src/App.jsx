@@ -7,6 +7,7 @@ import NewComplaint from './pages/NewComplaint';
 import ComplaintDetail from './pages/ComplaintDetail';
 import AdminPanel from './pages/AdminPanel';
 import Privacy from './pages/Privacy';
+import MapView from './pages/MapView';
 import Navbar from './components/common/Navbar';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import AdminRoute from './components/common/AdminRoute';
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/map" element={<MapView />} />
         <Route
           path="/dashboard"
           element={

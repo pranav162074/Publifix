@@ -15,6 +15,7 @@ const NewComplaint = () => {
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [locationStatus, setLocationStatus] = useState('idle');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -29,17 +30,49 @@ const NewComplaint = () => {
     }
   };
 
+  const getLocation = () => {
+    return new Promise((resolve) => {
+      if (!navigator.geolocation) {
+        setLocationStatus('unsupported');
+        resolve(null);
+        return;
+      }
+
+      setLocationStatus('locating');
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocationStatus('success');
+          resolve({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        () => {
+          setLocationStatus('denied');
+          resolve(null);
+        },
+        { timeout: 8000 }
+      );
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSubmitting(true);
 
     try {
+      const location = await getLocation();
+
       const data = new FormData();
       data.append('title', formData.title);
       data.append('description', formData.description);
       data.append('category', formData.category);
       if (photo) data.append('photo', photo);
+      if (location) {
+        data.append('lat', location.lat);
+        data.append('lng', location.lng);
+      }
 
       const res = await createComplaint(data);
       navigate(`/complaints/${res.data._id}`);
@@ -90,6 +123,18 @@ const NewComplaint = () => {
         </label>
 
         {preview && <img src={preview} alt="Preview" className={styles.preview} />}
+
+        {locationStatus === 'locating' && (
+          <p className={styles.locationNote}>Getting your location...</p>
+        )}
+        {locationStatus === 'success' && (
+          <p className={styles.locationNote}>📍 Location attached</p>
+        )}
+        {locationStatus === 'denied' && (
+          <p className={styles.locationNote}>
+            Location permission denied — complaint will be submitted without a map pin.
+          </p>
+        )}
 
         <button type="submit" disabled={submitting}>
           {submitting ? 'Submitting...' : 'Submit Complaint'}

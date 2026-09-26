@@ -73,3 +73,10 @@
   font-size: 0.85rem;
   text-align: center;
 }
+
+.locationNote {
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-align: center;
+  margin: -0.3rem 0;
+}
