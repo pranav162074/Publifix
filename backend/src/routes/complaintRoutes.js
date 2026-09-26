@@ -1,9 +1,10 @@
 import express from 'express';
 import {
   createComplaint,
-  getMyComplaints,
   getComplaintById,
+  getMyComplaints,
   getAllComplaints,
+  getComplaintsForMap,
   updateComplaintStatus,
 } from '../controllers/complaintController.js';
 import protect from '../middleware/authMiddleware.js';
@@ -15,6 +16,7 @@ const router = express.Router();
 
 router.post('/', protect, complaintLimiter, upload.single('photo'), createComplaint);
 router.get('/mine', protect, getMyComplaints);
+router.get('/map', getComplaintsForMap);
 router.get('/', protect, admin, getAllComplaints);
 router.get('/:id', getComplaintById);
 router.patch('/:id/status', protect, admin, updateComplaintStatus);

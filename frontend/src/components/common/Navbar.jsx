@@ -18,6 +18,7 @@ const Navbar = () => {
       </Link>
 
       <div className={styles.links}>
+        <Link to="/map">Map</Link>
         {user ? (
           <>
             <Link to="/dashboard">Dashboard</Link>

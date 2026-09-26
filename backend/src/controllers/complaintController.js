@@ -21,7 +21,7 @@ const uploadToCloudinary = (buffer) => {
 // @route  POST /api/complaints
 export const createComplaint = async (req, res) => {
   try {
-    const { title, description, category, address } = req.body;
+    const { title, description, category, address, lat, lng } = req.body;
 
     let photoUrl = '';
     if (req.file) {
@@ -35,6 +35,7 @@ export const createComplaint = async (req, res) => {
       category,
       address,
       photoUrl,
+      location: lat && lng ? { lat: parseFloat(lat), lng: parseFloat(lng) } : undefined,
       createdBy: req.user.id,
     });
 
@@ -105,6 +106,21 @@ export const getAllComplaints = async (req, res) => {
       totalPages: Math.ceil(total / limit),
       totalComplaints: total,
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc   Get all complaints that have location data (for map view)
+// @route  GET /api/complaints/map
+export const getComplaintsForMap = async (req, res) => {
+  try {
+    const complaints = await Complaint.find({
+      'location.lat': { $exists: true },
+      'location.lng': { $exists: true },
+    }).select('title category status location createdAt');
+
+    res.json(complaints);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

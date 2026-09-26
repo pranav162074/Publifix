@@ -13,5 +13,7 @@ export const getComplaintById = (id) => axiosInstance.get(`/complaints/${id}`);
 export const getAllComplaints = (page = 1, limit = 9) =>
   axiosInstance.get(`/complaints?page=${page}&limit=${limit}`);
 
+export const getComplaintsForMap = () => axiosInstance.get('/complaints/map');
+
 export const updateComplaintStatus = (id, status) =>
   axiosInstance.patch(`/complaints/${id}/status`, { status });
