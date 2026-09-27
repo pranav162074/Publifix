@@ -75,3 +75,31 @@
   display: flex;
   justify-content: center;
 }
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+}
+
+.passwordWrapper input {
+  flex: 1;
+  padding-right: 2.4rem;
+}
+
+.eyeButton {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+}
+
+.eyeButton:hover {
+  color: #374151;
+}
