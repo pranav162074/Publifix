@@ -2,6 +2,7 @@ import Complaint from '../models/Complaint.js';
 import User from '../models/User.js';
 import cloudinary from '../config/cloudinary.js';
 import sendEmail from '../utils/sendEmail.js';
+import mongoose from 'mongoose';
 
 // Helper: upload a buffer to Cloudinary
 const uploadToCloudinary = (buffer) => {
@@ -121,6 +122,28 @@ export const getComplaintsForMap = async (req, res) => {
     }).select('title category status location createdAt');
 
     res.json(complaints);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getMyComplaintStats = async (req, res) => {
+  try {
+    const stats = await Complaint.aggregate([
+      { $match: { createdBy: new mongoose.Types.ObjectId(req.user.id) } },
+      { $group: { _id: '$status', count: { $sum: 1 } } },
+    ]);
+
+    const statusOptions = ['pending', 'in-review', 'in-progress', 'resolved', 'rejected'];
+    const counts = Object.fromEntries(statusOptions.map((s) => [s, 0]));
+
+    stats.forEach((s) => {
+      counts[s._id] = s.count;
+    });
+
+    const total = Object.values(counts).reduce((sum, c) => sum + c, 0);
+
+    res.json({ total, counts });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

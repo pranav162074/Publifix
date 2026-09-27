@@ -5,3 +5,4 @@ export const loginUser = (data) => axiosInstance.post('/auth/login', data);
 export const googleLogin = (credential) =>
   axiosInstance.post('/auth/google', { credential });
 export const getCurrentUser = () => axiosInstance.get('/auth/me');
+export const deleteAccount = () => axiosInstance.delete('/auth/me');

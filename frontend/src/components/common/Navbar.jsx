@@ -24,6 +24,9 @@ const Navbar = () => {
             <Link to="/dashboard">Dashboard</Link>
             <Link to="/new-complaint">Report an Issue</Link>
             {user.role === 'admin' && <Link to="/admin">Admin Panel</Link>}
+            <Link to="/profile" className={styles.profileLink}>
+              <img src={user.avatar} alt={user.name} className={styles.navAvatar} />
+            </Link>
             <button onClick={handleLogout} className={styles.logoutBtn}>
               Logout
             </button>
