@@ -43,3 +43,16 @@
 .logoutBtn:hover {
   background-color: #b91c1c;
 }
+
+.profileLink {
+  display: flex;
+  align-items: center;
+}
+
+.navAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}

@@ -15,5 +15,7 @@ export const getAllComplaints = (page = 1, limit = 9) =>
 
 export const getComplaintsForMap = () => axiosInstance.get('/complaints/map');
 
+export const getMyComplaintStats = () => axiosInstance.get('/complaints/stats');
+
 export const updateComplaintStatus = (id, status) =>
   axiosInstance.patch(`/complaints/${id}/status`, { status });

@@ -8,6 +8,7 @@ import ComplaintDetail from './pages/ComplaintDetail';
 import AdminPanel from './pages/AdminPanel';
 import Privacy from './pages/Privacy';
 import MapView from './pages/MapView';
+import Profile from './pages/Profile';
 import Navbar from './components/common/Navbar';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import AdminRoute from './components/common/AdminRoute';
@@ -35,6 +36,14 @@ function App() {
           element={
             <ProtectedRoute>
               <NewComplaint />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />

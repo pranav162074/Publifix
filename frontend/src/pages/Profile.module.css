@@ -1,0 +1,152 @@
+.container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.card {
+  text-align: center;
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.8rem;
+}
+
+.email {
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.adminBadge {
+  display: inline-block;
+  background-color: #1f2937;
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.statsCard {
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.statsCard h3 {
+  margin-bottom: 0.8rem;
+}
+
+.total {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+}
+
+.statusItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.7rem;
+  background-color: #f9fafb;
+  border-radius: 6px;
+}
+
+.count {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.status {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.logoutBtn {
+  padding: 0.6rem;
+  border: 1px solid #dc2626;
+  border-radius: 6px;
+  background-color: white;
+  color: #dc2626;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.deleteBtn {
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #dc2626;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.confirmBox {
+  border: 1px solid #dc2626;
+  border-radius: 6px;
+  padding: 1rem;
+  background-color: #fef2f2;
+}
+
+.confirmBox p {
+  font-size: 0.85rem;
+  color: #7f1d1d;
+  margin-bottom: 0.8rem;
+}
+
+.confirmActions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.cancelBtn {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background-color: white;
+  color: #dc2626;
+  cursor: pointer;
+}
+
+.confirmDeleteBtn {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #dc2626;
+  color: white;
+  cursor: pointer;
+}
+
+.confirmDeleteBtn:disabled,
+.cancelBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.confirmDeleteBtn:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
